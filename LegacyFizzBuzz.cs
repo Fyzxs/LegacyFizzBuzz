@@ -13,8 +13,8 @@ namespace FizzBuzzToRefactor
     {
         public static string FizzBuzz(int problem)
         {
-            IntAsString intAsString = new IntAsString();
-            intAsString.Value = problem;
+            Stringer stringer = new Stringer();
+            stringer.Value = problem;
 
             ModId modId = ModId.None;
             if (problem % 3 == 0)
@@ -31,7 +31,7 @@ namespace FizzBuzzToRefactor
 
             if (response == null)
             {
-                return intAsString.Convert(problem);
+                return stringer.Convert(problem);
             }
             else
             {
@@ -51,7 +51,7 @@ namespace FizzBuzzToRefactor
         }
     }
 
-    public class IntAsString
+    public class Stringer
     {
         public int Value { get; set; }
         public string Convert(int problem) => Value.ToString();
