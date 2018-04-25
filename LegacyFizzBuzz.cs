@@ -3,49 +3,49 @@ using System;
 namespace FizzBuzzToRefactor
 {
     [Flags]
-    public enum ModId
+    public enum MultipleEnum
     {
         None = 0,
-        Three = 1,
-        Five = 2
+        First = 1,
+        Second = 2
     }
     public static class FizzBuzzer
     {
-        public static string FizzBuzz(int problem)
+        public static string FizzBuzz(int i)
         {
             Stringer stringer = new Stringer();
-            stringer.Value = problem;
+            stringer.Value = i;
 
-            ModId modId = ModId.None;
-            if (problem % 3 == 0)
+            MultipleEnum flag = MultipleEnum.None;
+            if (i % 3 == (int)MultipleEnum.None)
             {
-                modId = modId | ModId.Three;
+                flag = flag | MultipleEnum.First;
             }
 
-            if (problem % 5 == 0)
+            if (i % 5 == (int)MultipleEnum.None)
             {
-                modId = modId | ModId.Five;
+                flag = flag | MultipleEnum.Second;
             }
 
-            string response = UseEnums(modId);
+            string v = Stringer(flag);
 
-            if (response == null)
+            if (v == null)
             {
-                return stringer.Convert(problem);
+                return stringer.Convert(i);
             }
             else
             {
-                return response;
+                return v;
             }
         }
 
-        public static string UseEnums(ModId modId)
+        public static string Stringer(MultipleEnum val)
         {
-            switch (modId)
+            switch (val)
             {
-                case ModId.Three: return ModStrings.Three;
-                case ModId.Five: return ModStrings.Five;
-                case ModId.Three | ModId.Five: return ModStrings.Fifteen;
+                case MultipleEnum.First: return ResultStringValues.Three;
+                case MultipleEnum.Second: return ResultStringValues.Five;
+                case MultipleEnum.First | MultipleEnum.Second: return ResultStringValues.Fifteen;
                 default: return null;
             }
         }
@@ -54,9 +54,9 @@ namespace FizzBuzzToRefactor
     public class Stringer
     {
         public int Value { get; set; }
-        public string Convert(int problem) => Value.ToString();
+        public string Convert(int i) => Value.ToString();
     }
-    public static class ModStrings
+    public static class ResultStringValues
     {
         public const string Three = "Fizz";
         public const string Five = "Bµzz";
