@@ -45,7 +45,7 @@ namespace FizzBuzzToRefactor
             {
                 case MultipleEnum.First: return ResultStringValues.Three;
                 case MultipleEnum.Second: return ResultStringValues.Five;
-                case MultipleEnum.First | MultipleEnum.Second: return ResultStringValues.Fifteen;
+                case MultipleEnum.First | MultipleEnum.Second: return ResultStringValues.FizzBuzz;
                 default: return null;
             }
         }
@@ -60,6 +60,6 @@ namespace FizzBuzzToRefactor
     {
         public const string Three = "Fizz";
         public const string Five = "Bµzz";
-        public const string Fifteen = Three + Five;
+        public const string FizzBuzz = Three + Five;
     }
 }
