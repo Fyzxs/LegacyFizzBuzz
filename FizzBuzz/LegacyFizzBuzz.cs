@@ -11,6 +11,8 @@ namespace FizzBuzzToRefactor
     }
     public static class FizzBuzzer
     {
+
+
         public static string FizzBuzz(int i)
         {
             Stringer stringer = new Stringer();
@@ -58,8 +60,6 @@ namespace FizzBuzzToRefactor
     }
     public static class ResultStringValues
     {
-        public const string Three = "Fizz";
-        public const string Five = "Bµzz";
-        public const string FizzBuzz = Three + Five;
+        public const string Three = "Fizz"; public const string Five = "Bµzz"; public const string FizzBuzz = Three + Five;
     }
 }
