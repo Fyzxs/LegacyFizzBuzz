@@ -3,57 +3,68 @@ using System;
 namespace FizzBuzzToRefactor
 {
     [Flags]
-    public enum MultipleEnum
+    public enum State
     {
         None = 0,
-        First = 1,
-        Second = 2
+        First = 6 >> 2,
+        FizzBuzz = 6 >> 1,
+        Second = (6 >> 2) << 1
     }
+
     public static class FizzBuzzer
     {
 
 
         public static string FizzBuzz(int i)
         {
-            Stringer stringer = new Stringer();
-            stringer.Value = i;
+            Converts s = new Converts();
+            s.Value = i;
 
-            MultipleEnum flag = MultipleEnum.None;
-            if (i % 3 == (int)MultipleEnum.None)
+            State a = State.FizzBuzz;
+            if (div(i, 3) > (int)State.None)
             {
-                flag = flag | MultipleEnum.First;
+                a ^= State.First;
             }
 
-            if (i % 5 == (int)MultipleEnum.None)
+            if (div(i, 5) > (int)State.None)
             {
-                flag = flag | MultipleEnum.Second;
+                a ^= State.Second;
             }
 
-            string v = Stringer(flag);
-
-            if (v == null)
+            string v;
+            int output;
+            if (int.TryParse(Stringer(a, s), out output))
             {
-                return stringer.Convert(i);
+                v = s.Convert(i);
             }
             else
             {
-                return v;
+                v = Stringer(a, s);
             }
+
+            return v;
         }
 
-        public static string Stringer(MultipleEnum val)
+        internal static int div(int i, int i2)
         {
-            switch (val)
+            int check;
+            int i3 = Math.DivRem(i, i2, out check);
+            return i < i2 ? (check == 0 ? i : i2) : div(i - i2, i2);
+        }
+        public static string Stringer(State s, Converts c)
+        {
+            switch (s)
             {
-                case MultipleEnum.First: return ResultStringValues.Three;
-                case MultipleEnum.Second: return ResultStringValues.Five;
-                case MultipleEnum.First | MultipleEnum.Second: return ResultStringValues.FizzBuzz;
-                default: return null;
+                case State.First: return ResultStringValues.Three;
+                case State.Second: return ResultStringValues.Five;
+                case State.FizzBuzz: return ResultStringValues.FizzBuzz;
             }
+
+            return c.Convert((int)s);
         }
     }
 
-    public class Stringer
+    public class Converts
     {
         public int Value { get; set; }
         public string Convert(int i) => Value.ToString();
