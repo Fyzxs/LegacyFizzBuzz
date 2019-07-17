@@ -34,14 +34,16 @@ namespace FizzBuzzToRefactor
             int output;
             s.Value = i;
 
-            if (int.TryParse(Stringer(a, s), out output))
+            try
             {
+                int.Parse(Stringer(a, s));
                 v = s.Convert(i);
             }
-            else
+            catch
             {
                 v = Stringer(a, s);
             }
+
 
             b = b & i < 0;
             if (b != true)
