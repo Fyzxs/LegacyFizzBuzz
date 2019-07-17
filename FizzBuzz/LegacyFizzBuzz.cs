@@ -68,7 +68,7 @@ namespace FizzBuzzToRefactor
             {
                 case State.First: return ResultStringValues.Three;
                 case State.Second: return ResultStringValues.Five;
-                case State.FizzBuzz: return ResultStringValues.FizzBuzz;
+                case State.First | State.Second: return ResultStringValues.FizzBuzz;
             }
 
             return c.Convert((int)s);
