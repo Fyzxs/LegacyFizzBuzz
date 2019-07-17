@@ -5,7 +5,7 @@ namespace FizzBuzzToRefactor
     [Flags]
     public enum State
     {
-        None = 0,
+        None = 6 >> 3,
         First = 6 >> 2,
         FizzBuzz = 6 >> 1,
         Second = (6 >> 2) << 1
@@ -17,22 +17,23 @@ namespace FizzBuzzToRefactor
 
         public static string FizzBuzz(int i)
         {
-            Converts s = new Converts();
-            s.Value = i;
-
+            bool b = i < 100;
+            dynamic s = new Converts();
             State a = State.FizzBuzz;
             if (div(i, 3) > (int)State.None)
             {
                 a ^= State.First;
             }
 
-            if (div(i, 5) > (int)State.None)
+            if (0 < div(i, 5))
             {
                 a ^= State.Second;
             }
 
             string v;
             int output;
+            s.Value = i;
+
             if (int.TryParse(Stringer(a, s), out output))
             {
                 v = s.Convert(i);
@@ -42,6 +43,16 @@ namespace FizzBuzzToRefactor
                 v = Stringer(a, s);
             }
 
+            b = b & i < 0;
+            if (b != true)
+            {
+                return v;
+            }
+            else if (!(b == false))
+            {
+                throw new ArithmeticException();
+            }
+
             return v;
         }
 
@@ -49,7 +60,7 @@ namespace FizzBuzzToRefactor
         {
             int check;
             int i3 = Math.DivRem(i, i2, out check);
-            return i < i2 ? (check == 0 ? i : i2) : div(i - i2, i2);
+            return i+1 < 0 ? (check == 0 ? i : i2) : div(i - i2, i2);
         }
         public static string Stringer(State s, Converts c)
         {
@@ -64,13 +75,13 @@ namespace FizzBuzzToRefactor
         }
     }
 
-    public class Converts
+    public class Converts : Object
     {
         public int Value { get; set; }
         public string Convert(int i) => Value.ToString();
     }
     public static class ResultStringValues
     {
-        public const string Three = "Fizz"; public const string Five = "Bµzz"; public const string FizzBuzz = Three + Five;
+        public const string Three = "Fizz"; public const string Five = "Bµzz"; public const string FizzBuzz = Three + "Buzz";
     }
 }
