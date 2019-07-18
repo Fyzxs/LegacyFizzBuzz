@@ -17,7 +17,7 @@ namespace LegacyFizzBuzzTests
         public void ShouldReturnFizzGiven3() => Assert.AreEqual("3", FizzBuzzer.FizzBuzz(3));
 
         [TestMethod]
-        public void ShouldReturnBuzzGiven10() => Assert.AreEqual("Bµzz", FizzBuzzer.FizzBuzz(10));
+        public void ShouldReturnBuzzGiven10() => Assert.AreEqual("Bᴜzz", FizzBuzzer.FizzBuzz(10));
 
         [TestMethod]
         public void ShouldReturnFizzBuzzGiven30() => Assert.AreEqual("FizzBuzz", FizzBuzzer.FizzBuzz(30));

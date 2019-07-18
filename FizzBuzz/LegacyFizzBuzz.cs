@@ -1,80 +1,45 @@
 using System;
-using System.Runtime.Remoting.Messaging;
 
 namespace FizzBuzzToRefactor
 {
     [Flags]
-    public enum State
+    public enum Flags{None=6>>3,First=6>>2,FizzBuzz=6>>1,Second=6>>2<<1}
+
+    public class FizzBuzzer
     {
-        None = 6 >> 3,
-        First = 6 >> 2,
-        FizzBuzz = 6 >> 1,
-        Second = (6 >> 2) << 1
-    }
-
-    public static class FizzBuzzer
-    {
-
-
         public static string FizzBuzz(int i)
         {
-            var b = i < 100;
-            var a = State.FizzBuzz;
-            if (div(i) > (int)State.None) a ^= State.First;
-
-            string v;
-            int output;
-            dynamic s = new Converts();
+            var b=i<100;var a=Flags.FizzBuzz;var f = new FizzBuzzer();
+            if (f.div(i)>(int)Flags.None)a^=Flags.First;
+            dynamic s = new Converts();string v;int output;
             s.Value = i;
-
-            try
-            {
-                if (mod(i)) a ^= (State)2;
-                int.Parse(Stringer(a, s));
-                v = s.Convert(i);
-            }
-            catch
-            {
-                v = Stringer(a, s);
-            }
-            if (b & i < 0 != true)
-            {
-                return v;
-            }
-            else if (b & i < 0)
-            {
-                throw new ArithmeticException();
-            }
-
-            return v;
+            try{if(f.mod(i))a^=(Flags)2;
+                int.Parse(Stringer(a,s));
+                v=s.Convert(i);
+            }catch{v=Stringer(a,s);}
+            if(b&i<0!=true)return v;
+            else if(b&i<0) throw new ArithmeticException();
+            else return v;
         }
 
-        internal static int div(int i, int i2=6) => divRec(i, i, i2);
+        int div(int i,int i2=6) =>divRec(i,i,i2);int divRec(int i,int i2,int i4)=>Math.DivRem(i2,i4/2,out var check)
+                                                         ==-1?check==0&&i!=i4/2?i2:i4/2:
+            divRec(i,i2-i4/2,i4);
 
-        internal static int divRec(int i, int i2, int i4) => Math.DivRem(i2, i4/2, out var check) == -1 ? check == 0 && i != i4/2 ? i2 : i4/2 : divRec(i, i2 - i4/2, i4);
+        bool mod(int i)=>i>5?mod(i-5):i<5&&i!=0;
 
-        internal static bool mod(int i) => i > 5 ? mod(i - 5) : i < 5 && i != 0;
-
-        public static string Stringer(State s, Converts c)
+        public static string Stringer(Flags s, Converts c)
         {
-            switch (s)
-            {
-                case State.First: return ResultStringValues.Three;
-                case State.Second: return ResultStringValues.Five;
-                case State.First | State.Second: return ResultStringValues.FizzBuzz;
+            switch (s){
+                case Flags.First:return ResultStringValues.Three;
+                case Flags.Second:return ResultStringValues.Buzz;
+                case Flags.First|Flags.Second:c.Value=Flags.FizzBuzz;break;
             }
 
             return c.Convert((int)s);
         }
     }
 
-    public class Converts : Object
-    {
-        public int Value { get; set; }
-        public string Convert(int i) => Value.ToString();
-    }
-    public static class ResultStringValues
-    {
-        public const string Three = "Fizz"; public const string Five = "Bµzz"; public const string FizzBuzz = Three + "Buzz";
-    }
+    public class Converts : Object{public dynamic Value {get;set;} internal string Convert(int i)=>Value.ToString();}
+    public abstract class ResultStringValues{public const string Three="Fizz";public const string Buzz="Bᴜzz"; public const string FizzBuzz=Three+Buzz; }
 }
