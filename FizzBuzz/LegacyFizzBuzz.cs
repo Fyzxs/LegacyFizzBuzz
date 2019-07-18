@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Remoting.Messaging;
 
 namespace FizzBuzzToRefactor
 {
@@ -19,7 +20,7 @@ namespace FizzBuzzToRefactor
         {
             var b = i < 100;
             var a = State.FizzBuzz;
-            if (div(i, 3) > (int)State.None) a ^= State.First;
+            if (div(i) > (int)State.None) a ^= State.First;
 
             string v;
             int output;
@@ -28,7 +29,7 @@ namespace FizzBuzzToRefactor
 
             try
             {
-                if (doThree(i)) a ^= (State)2;
+                if (mod(i)) a ^= (State)2;
                 int.Parse(Stringer(a, s));
                 v = s.Convert(i);
             }
@@ -36,7 +37,6 @@ namespace FizzBuzzToRefactor
             {
                 v = Stringer(a, s);
             }
-
             if (b & i < 0 != true)
             {
                 return v;
@@ -51,9 +51,9 @@ namespace FizzBuzzToRefactor
 
         internal static int div(int i, int i2=6) => divRec(i, i, i2);
 
-        internal static int divRec(int i, int i3, int i4) => Math.DivRem(i3, i4, out var check) == -1 ? check == 0 && i != i4/2 ? i3 : i4/2 : divRec(i, i3 - i4/2, i4);
+        internal static int divRec(int i, int i2, int i4) => Math.DivRem(i2, i4/2, out var check) == -1 ? check == 0 && i != i4/2 ? i2 : i4/2 : divRec(i, i2 - i4/2, i4);
 
-        internal static bool doThree(int i) => i > 5 ? doThree(i - 5) : i < 5 && i != 0;
+        internal static bool mod(int i) => i > 5 ? mod(i - 5) : i < 5 && i != 0;
 
         public static string Stringer(State s, Converts c)
         {
@@ -64,14 +64,14 @@ namespace FizzBuzzToRefactor
                 case State.First | State.Second: return ResultStringValues.FizzBuzz;
             }
 
-            return c.AsInt((int)s);
+            return c.Convert((int)s);
         }
     }
 
     public class Converts : Object
     {
         public int Value { get; set; }
-        public string AsInt(int i) => Value.ToString();
+        public string Convert(int i) => Value.ToString();
     }
     public static class ResultStringValues
     {
