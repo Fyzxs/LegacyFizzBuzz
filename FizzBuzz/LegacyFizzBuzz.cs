@@ -17,25 +17,18 @@ namespace FizzBuzzToRefactor
 
         public static string FizzBuzz(int i)
         {
-            bool b = i < 100;
-            dynamic s = new Converts();
-            State a = State.FizzBuzz;
-            if (div(i, 3) > (int)State.None)
-            {
-                a ^= State.First;
-            }
-
-            if (0 < div(i, 5))
-            {
-                a ^= State.Second;
-            }
+            var b = i < 100;
+            var a = State.FizzBuzz;
+            if (div(i, 3) > (int)State.None) a ^= State.First;
 
             string v;
             int output;
+            dynamic s = new Converts();
             s.Value = i;
 
             try
             {
+                if (doThree(i)) a ^= (State)2;
                 int.Parse(Stringer(a, s));
                 v = s.Convert(i);
             }
@@ -44,13 +37,11 @@ namespace FizzBuzzToRefactor
                 v = Stringer(a, s);
             }
 
-
-            b = b & i < 0;
-            if (b != true)
+            if (b & i < 0 != true)
             {
                 return v;
             }
-            else if (!(b == false))
+            else if (b & i < 0)
             {
                 throw new ArithmeticException();
             }
@@ -58,12 +49,12 @@ namespace FizzBuzzToRefactor
             return v;
         }
 
-        internal static int div(int i, int i2)
-        {
-            int check;
-            int i3 = Math.DivRem(i, i2, out check);
-            return i+1 < 0 ? (check == 0 ? i : i2) : div(i - i2, i2);
-        }
+        internal static int div(int i, int i2=6) => divRec(i, i, i2);
+
+        internal static int divRec(int i, int i3, int i4) => Math.DivRem(i3, i4, out var check) == -1 ? check == 0 && i != i4/2 ? i3 : i4/2 : divRec(i, i3 - i4/2, i4);
+
+        internal static bool doThree(int i) => i > 5 ? doThree(i - 5) : i < 5 && i != 0;
+
         public static string Stringer(State s, Converts c)
         {
             switch (s)
@@ -73,14 +64,14 @@ namespace FizzBuzzToRefactor
                 case State.First | State.Second: return ResultStringValues.FizzBuzz;
             }
 
-            return c.Convert((int)s);
+            return c.AsInt((int)s);
         }
     }
 
     public class Converts : Object
     {
         public int Value { get; set; }
-        public string Convert(int i) => Value.ToString();
+        public string AsInt(int i) => Value.ToString();
     }
     public static class ResultStringValues
     {
