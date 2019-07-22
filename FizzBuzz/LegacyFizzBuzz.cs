@@ -17,9 +17,9 @@ namespace FizzBuzzToRefactor
                 int.Parse(Stringer(a,s));
                 v=s.Convert(i);
             }catch{v=Stringer(a,s);}
-            if(b&i<0!=true)return v;
-            else if(b&i<0) throw new ArithmeticException();
-            else return v;
+            if(!b&i<0)return v;else if(b&i<0!=false)
+            throw new ArithmeticException(); else
+            return v;
         }
 
         int div(int i,int i2=6) =>divRec(i,i,i2);int divRec(int i,int i2,int i4)=>Math.DivRem(i2,i4/2,out var check)
@@ -30,13 +30,12 @@ namespace FizzBuzzToRefactor
 
         public static string Stringer(Flags s, Converts c)
         {
-            switch (s){
-                case Flags.First:return ResultStringValues.Three;
-                case Flags.Second:return ResultStringValues.Buzz;
-                case Flags.First|Flags.Second:c.Value=Flags.FizzBuzz;break;
-            }
+            string r = null;
+            if((s&Flags.First)==Flags.First){if((s&Flags.Second)==0)r=ResultStringValues.Three;c.Value=Flags.FizzBuzz;}
+            else if((s&Flags.Second)==Flags.Second)r=ResultStringValues.Buzz;
+            else if(s==(Flags.First|Flags.Second))return ResultStringValues.FizzBuzz;
 
-            return c.Convert((int)s);
+            return r??c.Convert((int)s);
         }
     }
 
